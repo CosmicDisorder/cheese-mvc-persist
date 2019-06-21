@@ -1,8 +1,11 @@
 package org.launchcode.models;
 
+import groovy.lang.Category;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -12,8 +15,8 @@ import javax.validation.constraints.Size;
 @Entity
 public class Cheese {
 
-    @Id
-    @GeneratedValue
+    @Id                     // This is a primary key in the DB
+    @GeneratedValue         // Hibernate generates this value
     private int id;
 
     @NotNull
@@ -24,8 +27,6 @@ public class Cheese {
     @Size(min=1, message = "Description must not be empty")
     private String description;
 
-    private CheeseType type;
-
     public Cheese(String name, String description) {
         this.name = name;
         this.description = description;
@@ -35,10 +36,6 @@ public class Cheese {
 
     public int getId() {
         return id;
-    }
-
-    public int getCheeseId() {
-        return cheeseId;
     }
 
     public String getName() {
@@ -55,13 +52,5 @@ public class Cheese {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public CheeseType getType() {
-        return type;
-    }
-
-    public void setType(CheeseType type) {
-        this.type = type;
     }
 }
