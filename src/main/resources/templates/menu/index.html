@@ -4,14 +4,16 @@
 <body class="container body-content">
 <h1 th:text="${title}">Default Title</h1>
 
+
 <nav th:replace="fragments :: navigation"></nav>
 
-<ul>
-    <li th:each="category : ${categories}">
-        <a th:href="'/category/view/' + ${category.id}" th:text="${category.name}"></a>
-    </li>
-</ul>
+    <ul>
+        <li th:each="menu : ${menus}">
+            <a th:href="'/menu/view/' + ${menu.id}"
+               th:text="${menu.name}"></a>
+        </li>
+    </ul>
 
-<p><a href="/category/add">Add Cheese</a> | <a href="/category/remove">Remove Cheese</a></p>
+<p><a href="/menu/add">Add Menu</a> | <a href="/menu/remove">Remove Menu</a></p>
 </body>
 </html>

@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("category")
@@ -78,6 +76,23 @@ public class CategoryController {
         }
 
         return "redirect:";
+    }
+
+    @RequestMapping(value = "view/{categoryId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String viewCategory(@PathVariable int categoryId, Model model) {
+        Category category = categoryDao.findOne(categoryId);
+        ArrayList<Cheese> cheeseList = new ArrayList<>();
+        for(Cheese cheese : cheeseDao.findAll()) {
+            if(cheese.getCategory()==category) {
+                cheeseList.add(cheese);
+            }
+        }
+
+        model.addAttribute("title", category.getName());
+        model.addAttribute("cheeses", cheeseList);
+
+        return "category/view/" + categoryId;
     }
 
 }
