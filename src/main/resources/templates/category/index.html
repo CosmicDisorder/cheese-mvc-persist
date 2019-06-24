@@ -7,10 +7,15 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <table class="table">
+<tr>
+    <th>List of Categories</th>
+</tr>
 
 <tr th:each="category : ${categories}">
     <th th:text="${category.name}"></th>
+    <th th:text="${category.id}"></th>
 </tr>
+
 </table>
 
 </body>

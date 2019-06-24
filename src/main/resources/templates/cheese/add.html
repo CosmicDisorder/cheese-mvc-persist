@@ -17,6 +17,12 @@
         <input class="form-control" th:field="*{description}" />
         <span th:errors="*{description}" class="error"></span>
     </div>
+    <label th:for="type">Type</label>
+    <select name="categoryId">
+        <option th:each="category : ${categories}"
+                th:text="${category.name}"
+                th:value="${category.id}"></option>
+    </select>
     <input type="submit" value="Add Cheese" />
 </form>
 

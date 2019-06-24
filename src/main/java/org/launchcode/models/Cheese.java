@@ -1,7 +1,5 @@
 package org.launchcode.models;
 
-import groovy.lang.Category;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,6 +24,9 @@ public class Cheese {
     @NotNull
     @Size(min=1, message = "Description must not be empty")
     private String description;
+
+    @ManyToOne
+    private Category category;
 
     public Cheese(String name, String description) {
         this.name = name;
@@ -53,4 +54,8 @@ public class Cheese {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Category getCategory() { return category; }
+
+    public void setCategory(Category category) { this.category = category; }
 }
