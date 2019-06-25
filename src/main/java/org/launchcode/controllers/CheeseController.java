@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -78,10 +75,48 @@ public class CheeseController {
         for(int plzDelet : cheeseIds){
             cheeseDao.delete(plzDelet);
         }
+        return "redirect:/cheese";
+    }
+
+    @RequestMapping(value = "edit-choices", method = RequestMethod.GET)
+    public String displayEditChoices(Model model) {
+        model.addAttribute("cheeses", cheeseDao.findAll());
+        model.addAttribute("title", "Edit Cheese");
+        return "cheese/edit-choices";
+    }
+
+    @RequestMapping(value = "edit-choices", method = RequestMethod.POST)
+    public String processEditChoice(@RequestParam int cheeseId) {
+        return "redirect:/cheese/edit/"+cheeseId;
+    }
 
 
 
-        return "redirect:";
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId) {
+        Cheese cheese = cheeseDao.findOne(cheeseId);
+
+        model.addAttribute("title", "Edit " + cheese.getName());
+        model.addAttribute(cheese);
+        model.addAttribute("categories", categoryDao.findAll());
+
+        return "cheese/edit";
+    }
+
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(@ModelAttribute @Valid Cheese newCheese,
+                                    Errors errors, @RequestParam int categoryId,
+                                    @PathVariable int cheeseId, Model model){
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Cheese");
+            return "cheese/edit";
+        }
+        cheeseDao.delete(cheeseId);
+        Category cat = categoryDao.findOne(categoryId);
+        newCheese.setCategory(cat);
+        cheeseDao.save(newCheese);
+
+        return "redirect:/cheese";
     }
 
 }

@@ -16,11 +16,11 @@ public class Cheese {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=3, max=25)
     private String name;
 
     @NotNull
-    @Size(min=1, message = "Description must not be empty")
+    @Size(min=1, max=25)
     private String description;
 
     @ManyToOne

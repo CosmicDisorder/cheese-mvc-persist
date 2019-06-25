@@ -71,7 +71,7 @@ public class CategoryController {
         }
         for(Cheese aCheese : cheeseDao.findAll()) {
             if (aCheese.getCategory() == null) {
-                cheeseDao.delete(aCheese);
+                cheeseDao.delete(aCheese.getId());
             }
         }
 
