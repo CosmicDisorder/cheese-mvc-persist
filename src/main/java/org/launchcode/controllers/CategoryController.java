@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Controller
@@ -65,16 +66,9 @@ public class CategoryController {
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCategoryForm(@RequestParam int[] categoryIds) {
-
         for(int plzDelet : categoryIds){
             categoryDao.delete(plzDelet);
         }
-        for(Cheese aCheese : cheeseDao.findAll()) {
-            if (aCheese.getCategory() == null) {
-                cheeseDao.delete(aCheese.getId());
-            }
-        }
-
         return "redirect:";
     }
 

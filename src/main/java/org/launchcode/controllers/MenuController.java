@@ -95,5 +95,17 @@ public class MenuController {
         return "redirect:/menu/view/" + theMenu.getId();
     }
 
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String displayRemoveCategoryForm(Model model) {
+        model.addAttribute("menus", menuDao.findAll());
+        model.addAttribute("title", "Remove Menu");
+        return "menu/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveCategoryForm(@RequestParam int menuId) {
+        menuDao.delete(menuId);
+        return "redirect:";
+    }
 
 }
