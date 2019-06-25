@@ -79,7 +79,6 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "view/{categoryId}", method = RequestMethod.GET)
-    @ResponseBody
     public String viewCategory(@PathVariable int categoryId, Model model) {
         Category category = categoryDao.findOne(categoryId);
         ArrayList<Cheese> cheeseList = new ArrayList<>();
@@ -92,7 +91,7 @@ public class CategoryController {
         model.addAttribute("title", category.getName());
         model.addAttribute("cheeses", cheeseList);
 
-        return "category/view/" + categoryId;
+        return "category/view";
     }
 
 }
